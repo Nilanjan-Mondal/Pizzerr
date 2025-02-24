@@ -1,9 +1,9 @@
-const { registerUser } = require("../services/userService.js");  // Correct the import here
+const { registerUser, findUserByEmailAndMobileNumber } = require("../services/userService.js");  // Correct the import here
 
 async function createUser(req, res) {
     try {
         const response = await registerUser(req.body);
-        return res.json({
+        return res.status(201).json({
             message: "User created successfully",
             success: true,
             data: response,
@@ -11,7 +11,7 @@ async function createUser(req, res) {
         });
     } catch (error) {
         console.error("Error in createUser:", error);
-        return res.json({
+        return res.status(error.statusCode).json({
             message: error.message || "An unexpected error occurred",
             success: false,
             data: {},
@@ -20,7 +20,27 @@ async function createUser(req, res) {
     }
 }
 
-module.exports = { createUser };
+async function getUser(req, res) {
+    try {
+        const response = await findUserByEmailAndMobileNumber(req.body);
+        return res.status(201).json({
+            message: "User fetched successfully",
+            success: true,
+            data: response,
+            error: {}
+        });
+    } catch (error) {
+        console.error("Error in createUser:", error);
+        return res.status(error.statusCode).json({
+            message: error.message || "An unexpected error occurred",
+            success: false,
+            data: {},
+            error: error
+        });
+    }
+}
+
+module.exports = { createUser, getUser };
 
 
 // the below oops code does the same thing as the abov code

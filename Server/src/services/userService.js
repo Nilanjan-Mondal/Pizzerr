@@ -43,8 +43,23 @@ async function registerUser(userDetails) {
 
 }
 
+async function findUserByEmailAndMobileNumber(userDetails) {
+    try {
+        const user = await findUser({
+            email: userDetails.email,
+            mobileNumber: userDetails.mobileNumber
+        });
+        return user;
+    } catch (error) {
+        throw {
+            reason: "User not found",
+            statusCode: 500
+        }
+    }
+}
+
 module.exports = {
-    registerUser
+    registerUser, findUserByEmailAndMobileNumber
 };
 
 
