@@ -3,9 +3,9 @@ const { loginUser } = require("../services/authService");
 async function login (req, res) {
     try {
         const loginPayLoad = req.body;
-        const responseToken = await loginUser(loginPayLoad);
+        const response = await loginUser(loginPayLoad);
 
-        res.cookie("authToken", responseToken, { 
+        res.cookie("authToken", response.token, { 
 
             //this is used to make sure that the cookie or the jwt is not accessible by the client side javascript
 
@@ -17,7 +17,9 @@ async function login (req, res) {
         return res.status(200).json({
             message: "User logged in successfully",
             success: true,
-            data: {},
+            data: {
+                role: response.role
+            },
             error: {}
         });
     } catch (error) {

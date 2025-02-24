@@ -35,7 +35,12 @@ async function loginUser (authDetails) {
 
     const token = jwt.sign({email: user.email, id: user._id, role: userRole}, JWT_SECRET, {expiresIn: "60h"});
 
-    return token;
+    // return token;
+    // 4. Return token + role
+    return {
+        token,
+        role: userRole
+    };
 }
 
 async function logoutUser (req, res) {
