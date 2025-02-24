@@ -49,12 +49,20 @@ async function findUserByEmailAndMobileNumber(userDetails) {
             email: userDetails.email,
             mobileNumber: userDetails.mobileNumber
         });
+
+        if (!user) {
+            throw {
+                message: "User not found",
+                statusCode: 404
+            };
+        }
+
         return user;
     } catch (error) {
         throw {
-            reason: "User not found",
-            statusCode: 500
-        }
+            message: error.message || "Database error",
+            statusCode: error.statusCode || 500
+        };
     }
 }
 

@@ -22,16 +22,27 @@ async function createUser(req, res) {
 
 async function getUser(req, res) {
     try {
-        const response = await findUserByEmailAndMobileNumber(req.body);
-        return res.status(201).json({
+        const user = await findUserByEmailAndMobileNumber(req.params);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+                success: false,
+                data: {},
+                error: {}
+            });
+        }
+
+        return res.status(200).json({
             message: "User fetched successfully",
             success: true,
-            data: response,
+            data: user,
             error: {}
         });
+
     } catch (error) {
-        console.error("Error in createUser:", error);
-        return res.status(error.statusCode).json({
+        console.error("Error in getUser:", error);
+        return res.status(error.statusCode || 500).json({
             message: error.message || "An unexpected error occurred",
             success: false,
             data: {},
