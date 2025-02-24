@@ -24,13 +24,22 @@ export default function AuthPage({ onAuth }) {
       : "http://localhost:3500/auth/login";
 
     try {
-      await axios.post(url, formData, { withCredentials: true });
-      onAuth(); // Call the onAuth function after successful sign-in or sign-up
+        const response = await axios.post(url, formData, { withCredentials: true });
+
+        if (response.data.success) {
+
+          console.log(response.data.data.role);
+            
+          localStorage.setItem("role", response.data.data.role);
+
+          onAuth(); // Call the onAuth function after successful sign-in or sign-up
+        }
     } catch (error) {
-      console.error("Error:", error.response?.data || error.message);
-      alert("Something went wrong!");
+        console.error("Error:", error.response?.data || error.message);
+        alert("Something went wrong!");
     }
-  };
+};
+
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
