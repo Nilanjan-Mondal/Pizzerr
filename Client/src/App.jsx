@@ -6,6 +6,8 @@ import Navbar from "./components/Navbar";
 import Home from "./Pages/Home";
 import AboutUs from "./components/AboutUs";
 import axios from "axios";
+import Menu from "./Pages/Menu";
+import AddProduct from "./Pages/AddProduct";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -32,6 +34,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<AboutUs />} />
+              <Route path="/menu" element={<Menu />} />
+              <Route path="/add-product" element={<AddProduct/>} />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </>

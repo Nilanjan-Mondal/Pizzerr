@@ -8,6 +8,7 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const [userRole, setUserRole] = useState(localStorage.getItem("role") || null);
     const navigate = useNavigate(); // Use navigate for routing
 
     const handleSignOut = async () => {
@@ -44,6 +45,9 @@ export default function Navbar() {
                             {isDropdownOpen && (
                                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-20">
                                     <Link to="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Profile</Link>
+                                    {userRole === "ADMIN" && (
+                                        <Link to="/add-product" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Add Product</Link>
+                                    )}
                                     <button onClick={handleSignOut} className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200">Sign Out</button>
                                 </div>
                             )}
@@ -85,6 +89,12 @@ export default function Navbar() {
                         <FontAwesomeIcon icon={faUser} className="mr-2" />
                         Profile
                     </Link>
+                    {userRole === "ADMIN" && (
+                        <Link to="/add-product" className="flex items-center" onClick={() => setIsOpen(false)}>
+                            <FontAwesomeIcon icon={faUser} className="mr-2" />
+                            Add Product
+                        </Link>
+                    )}
                     <Link to="/cart" className="flex items-center" onClick={() => setIsOpen(false)}>
                         <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />
                         Cart
