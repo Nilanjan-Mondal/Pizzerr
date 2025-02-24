@@ -20,7 +20,7 @@ export default function AuthPage({ onAuth }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = isSignUp
-      ? "http://localhost:3500/auth/create/"
+      ? "http://localhost:3500/user/create/"
       : "http://localhost:3500/auth/login";
 
     try {
