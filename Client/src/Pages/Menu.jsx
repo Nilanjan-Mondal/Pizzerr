@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function Menu() {
     const [products, setProducts] = useState([]);
     const [groupedProducts, setGroupedProducts] = useState({});
+    const [cart, setCart] = useState({});
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -29,6 +32,27 @@ export default function Menu() {
 
         fetchProducts();
     }, []);
+
+    const addToCart = async (product) => {
+        try {
+            const response = await axios.post(`http://localhost:3500/carts/add/${product._id}`, {}, { withCredentials: true });
+            if (response.data.success) {
+                alert("Added to cart!");
+                setCart((prevCart) => {
+                    const newCart = { ...prevCart };
+                    if (newCart[product._id]) {
+                        newCart[product._id].quantity += 1;
+                    } else {
+                        newCart[product._id] = { ...product, quantity: 1 };
+                    }
+                    return newCart;
+                });
+            }
+        } catch (error) {
+            alert(error.response?.data?.message || error.message);
+            console.error("Error adding to cart:", error.response?.data || error.message);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-black relative">
@@ -70,6 +94,13 @@ export default function Menu() {
                                         <p className="text-red-400 font-bold text-lg mb-2">
                                             ₹{product.price}
                                         </p>
+                                        <button
+                                            onClick={() => addToCart(product)}
+                                            className="mt-4 flex items-center justify-center bg-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 transition"
+                                        >
+                                            <FontAwesomeIcon icon={faPlus} className="mr-2" />
+                                            Add to Cart
+                                        </button>
                                     </div>
                                 </div>
                             ))}
