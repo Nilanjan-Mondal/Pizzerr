@@ -1,4 +1,4 @@
-const { createProduct, getProductById, deleteProductById } = require("../services/productService");
+const { createProduct, getProductById, deleteProductById, getAllProductsService } = require("../services/productService");
 
 async function addProduct(req, res) {
     // console.log("req.file :", req.file);
@@ -50,6 +50,26 @@ async function getProduct(req, res) {
     }
 }
 
+async function getAllProducts(req, res) {
+    try {
+        const response = await getAllProductsService();
+        return res.status(200).json({
+            message: "Successfully retrieved all products",
+            success: true,
+            data: response,
+            error: {}
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(error.statusCode || 500).json({
+            message: error.message || "An unexpected error occurred",
+            success: false,
+            data: {},
+            error: error
+        })
+    }
+}
+
 async function deleteProduct(req, res) {
     try {
         const response = await deleteProductById(req.params.id);
@@ -73,5 +93,6 @@ async function deleteProduct(req, res) {
 module.exports = {
     addProduct,
     getProduct,
-    deleteProduct
+    deleteProduct,
+    getAllProducts
 }

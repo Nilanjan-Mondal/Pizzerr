@@ -18,6 +18,15 @@ async function getProductByIdRepository(productId) {
     }
 }
 
+async function getAllProductsRepository() {
+    try {
+        const products = await Product.find();
+        return products;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 async function deleteProductByIdRepository(productId) {
     try {
         const product = await Product.findByIdAndDelete(productId);
@@ -30,5 +39,6 @@ async function deleteProductByIdRepository(productId) {
 module.exports = {
     createProductRepository,
     getProductByIdRepository,
-    deleteProductByIdRepository
+    deleteProductByIdRepository,
+    getAllProductsRepository
 }

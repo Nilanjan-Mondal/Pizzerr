@@ -1,6 +1,6 @@
 const fs = require('fs/promises');
 const cloudinary = require('../config/cloudinaryConfig');
-const {createProductRepository, getProductByIdRepository, deleteProductByIdRepository} = require('../repositories/productRepository');
+const {createProductRepository, getProductByIdRepository, deleteProductByIdRepository, getAllProductsRepository} = require('../repositories/productRepository');
 
 async function createProduct(productDetails) {
     // 1. We should check if an image is coming to create the product.. then we should upload the image to cloudinary
@@ -53,6 +53,17 @@ async function getProductById(productId) {
     return response;
 }
 
+async function getAllProductsService() {
+    const response = await getAllProductsRepository();
+    if(!response) {
+        throw {
+            reason: "No products found",
+            statusCode: 404
+        }
+    }
+    return response;
+}
+
 async function deleteProductById(productId) {
     const response = await deleteProductByIdRepository(productId);
     if(!response) {
@@ -67,5 +78,6 @@ async function deleteProductById(productId) {
 module.exports = {
     createProduct,
     getProductById,
-    deleteProductById
+    deleteProductById,
+    getAllProductsService
 }
