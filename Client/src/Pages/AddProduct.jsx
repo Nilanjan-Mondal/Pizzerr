@@ -1,8 +1,72 @@
 import { useState } from "react";
 import { FiUpload } from "react-icons/fi";
+import axios from "axios";
 
 export default function AddProduct() {
     const [fileName, setFileName] = useState("");
+    const [file, setFile] = useState(null); // State to store the selected file
+
+    const [formData, setFormData] = useState({
+        productName: "",
+        description: "",
+        quantity: "",
+        price: "",
+        category: ""
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setFile(file);
+        setFileName(file ? file.name : "");
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const url = "http://localhost:3500/products/";
+
+        const data = new FormData();
+        data.append("productName", formData.productName);
+        data.append("description", formData.description);
+        data.append("quantity", formData.quantity);
+        data.append("price", formData.price);
+        data.append("category", formData.category);
+        if (file) {
+            data.append("productImage", file);
+        }
+
+        try {
+            const response = await axios.post(url, data, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+
+            console.log(response);
+
+            if (response.data.success) {
+                alert("Product added successfully!");
+                // Reset form fields
+                setFormData({
+                    productName: "",
+                    description: "",
+                    quantity: "",
+                    price: "",
+                    category: ""
+                });
+                setFile(null);
+                setFileName("");
+            }
+        } catch (error) {
+            console.error("Error:", error.response?.data || error.message);
+            alert("Something went wrong!");
+        }
+    };
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-black overflow-hidden relative">
@@ -25,7 +89,7 @@ export default function AddProduct() {
 
             {/* Form Container */}
             <div className="flex justify-center items-center w-full px-4 sm:px-6 lg:px-8 relative z-10">
-                <form className="bg-gray-900/70 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-full max-w-lg border border-gray-600">
+                <form onSubmit={handleSubmit} className="bg-gray-900/70 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-full max-w-lg border border-gray-600">
                     
                     {/* Product Name */}
                     <div className="mb-6">
@@ -34,8 +98,28 @@ export default function AddProduct() {
                         </label>
                         <input
                             type="text"
+                            name="productName"
+                            value={formData.productName}
+                            onChange={handleChange}
+                            required
                             className="w-full p-3 border border-gray-600 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition"
                             placeholder="Enter product name"
+                        />
+                    </div>
+
+                    {/* Product Category */}
+                    <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                            Product Category
+                        </label>
+                        <input
+                            type="text"
+                            name="category"
+                            value={formData.category}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-3 border border-gray-600 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition"
+                            placeholder="Enter product category"
                         />
                     </div>
 
@@ -45,6 +129,11 @@ export default function AddProduct() {
                             Product Description
                         </label>
                         <textarea
+                            type="text"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            required
                             className="w-full p-3 border border-gray-600 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition"
                             placeholder="Enter product description"
                             rows="3"
@@ -58,6 +147,10 @@ export default function AddProduct() {
                         </label>
                         <input
                             type="number"
+                            name="price"
+                            value={formData.price}
+                            onChange={handleChange}
+                            required
                             className="w-full p-3 border border-gray-600 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition"
                             placeholder="Enter product price"
                         />
@@ -70,6 +163,10 @@ export default function AddProduct() {
                         </label>
                         <input
                             type="number"
+                            name="quantity"
+                            value={formData.quantity}
+                            onChange={handleChange}
+                            required
                             className="w-full p-3 border border-gray-600 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition"
                             placeholder="Enter product quantity"
                         />
@@ -91,10 +188,10 @@ export default function AddProduct() {
                                 Upload
                                 <input
                                     type="file"
+                                    name="productImage"
+                                    accept="image/*"
                                     className="hidden"
-                                    onChange={(e) =>
-                                        setFileName(e.target.files[0]?.name || "")
-                                    }
+                                    onChange={handleFileChange}
                                 />
                             </label>
                         </div>
