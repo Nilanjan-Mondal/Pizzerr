@@ -8,6 +8,7 @@ import AboutUs from "./components/AboutUs";
 import axios from "axios";
 import Menu from "./Pages/Menu";
 import AddProduct from "./Pages/AddProduct";
+import Cart from "./Pages/Cart";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -35,6 +36,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<AboutUs />} />
               <Route path="/menu" element={<Menu />} />
+              <Route path="/cart" element={<Cart />} />
               <Route path="/add-product" element={<AddProduct/>} />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
