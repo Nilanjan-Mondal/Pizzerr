@@ -36,7 +36,9 @@ export default function Navbar() {
             <nav className="bg-black bg-opacity-80 backdrop-blur-lg p-4 shadow-md relative z-50">
                 <div className="container mx-auto flex justify-between items-center">
                     {/* Logo */}
-                    <Link to="/" className="text-white text-2xl font-bold">PIZZER</Link>
+                    <Link to="/" className="text-white text-2xl font-bold">
+                        PI<span className="text-yellow-500">Z</span><span className="text-red-500">Z</span>ER
+                    </Link>
 
                     {/* Desktop Menu */}
                     <ul className="hidden md:flex space-x-6">
