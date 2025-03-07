@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import pizzaimg from "../assets/pizzaTop.png";
 import cokeimg from "../assets/coke.png";
 import fryimg from "../assets/fries.png";
@@ -46,10 +47,12 @@ export default function Home() {
                             Served Hot
                         </li>
                     </ul>
-                    <a href="/menu" className="inline-flex items-center mt-4 px-5 py-3 bg-yellow-500 text-black font-bold rounded hover:bg-yellow-600 transition duration-300">
-                        <FontAwesomeIcon icon={faPizzaSlice} className="mr-2" />
-                        Order Now
-                    </a>
+                    <Link to={"/menu"}>
+                        <a href="/menu" className="inline-flex items-center mt-4 px-5 py-3 bg-yellow-500 text-black font-bold rounded hover:bg-yellow-600 transition duration-300">
+                            <FontAwesomeIcon icon={faPizzaSlice} className="mr-2" />
+                            Order Now
+                        </a>
+                    </Link>
                 </div>
 
                 {/* Pizza Image */}
