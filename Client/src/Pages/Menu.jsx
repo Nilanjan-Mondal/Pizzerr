@@ -59,10 +59,7 @@ export default function Menu() {
         <div className="min-h-screen bg-black relative">
             {/* Background Effects */}
             <div className="absolute inset-0 overflow-hidden">
-                {/* Yellow Glow at Top-Right */}
                 <div className="absolute top-0 right-0 w-[18rem] h-[18rem] bg-yellow-500 opacity-40 rounded-full blur-[120px]"></div>
-
-                {/* Red Glow at Bottom-Left */}
                 <div className="absolute bottom-0 left-0 w-[18rem] h-[18rem] bg-red-500 opacity-35 rounded-full blur-[100px]"></div>
             </div>
 
@@ -80,28 +77,35 @@ export default function Menu() {
                             {groupedProducts[category].map((product) => (
                                 <div
                                     key={product._id}
-                                    className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg overflow-hidden transform transition-all hover:scale-105"
+                                    className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg overflow-hidden transform transition-all hover:scale-105 flex flex-col"
                                 >
+                                    {/* Product Image with Fixed Height */}
                                     <img
                                         src={product.productImage}
                                         alt={product.productName}
                                         className="w-full h-48 object-cover"
                                     />
-                                    <div className="p-4 text-white">
-                                        <h2 className="text-xl font-bold mb-2 text-yellow-400">
+
+                                    {/* Content Wrapper */}
+                                    <div className="p-4 text-white flex flex-col flex-grow">
+                                        <h2 className="text-xl font-bold text-yellow-400">
                                             {product.productName}
                                         </h2>
-                                        <p className="text-gray-300 mb-2">{product.description}</p>
-                                        <p className="text-red-400 font-bold text-lg mb-2">
-                                            ₹{product.price}
-                                        </p>
-                                        <button
-                                            onClick={() => addToCart(product)}
-                                            className="mt-4 flex items-center justify-center bg-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 transition"
-                                        >
-                                            <FontAwesomeIcon icon={faPlus} className="mr-2" />
-                                            Add to Cart
-                                        </button>
+                                        <p className="text-gray-300 flex-grow">{product.description}</p>
+
+                                        {/* Price & Button Wrapper */}
+                                        <div className="flex justify-between items-center mt-4">
+                                            <p className="text-red-400 font-bold text-lg">
+                                                ₹{product.price}
+                                            </p>
+                                            <button
+                                                onClick={() => addToCart(product)}
+                                                className="flex items-center bg-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 transition"
+                                            >
+                                                <FontAwesomeIcon icon={faPlus} className="mr-2" />
+                                                Add to Cart
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
