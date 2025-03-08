@@ -18,7 +18,8 @@ const productRouter = require('./routes/productRoute.js');
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:5173', // Replace with your client's origin
+    origin: true, // Replace with your client's origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add the methods you need
     credentials: true // Allow credentials (cookies, authorization headers, etc.)
 }));
 
