@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCartItems = async () => {
@@ -16,7 +19,6 @@ export default function Cart() {
                 setLoading(false);
             }
         };
-
         fetchCartItems();
     }, []);
 
@@ -32,7 +34,6 @@ export default function Cart() {
             }
         } catch (error) {
             alert(error.response?.data?.message || error.message);
-            console.error("Error adding to cart:", error.response?.data || error.message);
         }
     };
 
@@ -50,79 +51,85 @@ export default function Cart() {
             }
         } catch (error) {
             alert(error.response?.data?.message || error.message);
-            console.error("Error removing from cart:", error.response?.data || error.message);
         }
     };
 
+    const totalAmount = cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+
     if (loading) {
-        return (
-            <div className="min-h-screen bg-black relative">
-                <div className="absolute inset-0 overflow-hidden">
-                    {/* Yellow Glow at Top-Right */}
-                    <div className="absolute top-0 right-0 w-[18rem] h-[18rem] bg-yellow-500 opacity-40 rounded-full blur-[120px]"></div>
-                    {/* Red Glow at Bottom-Left */}
-                    <div className="absolute bottom-0 left-0 w-[18rem] h-[18rem] bg-red-500 opacity-35 rounded-full blur-[100px]"></div>
-                </div>
-            </div>
-        );
+        return <div className="min-h-screen bg-black text-white flex items-center justify-center">Loading...</div>;
     }
 
     return (
-        <div className="min-h-screen bg-black relative">
-            {/* Background Effects */}
+        <div className="min-h-screen bg-black relative text-white">
             <div className="absolute inset-0 overflow-hidden">
-                {/* Yellow Glow at Top-Right */}
                 <div className="absolute top-0 right-0 w-[18rem] h-[18rem] bg-yellow-500 opacity-40 rounded-full blur-[120px]"></div>
-                {/* Red Glow at Bottom-Left */}
                 <div className="absolute bottom-0 left-0 w-[18rem] h-[18rem] bg-red-500 opacity-35 rounded-full blur-[100px]"></div>
             </div>
 
             <div className="relative z-10 max-w-6xl mx-auto px-6 py-16">
-                <h1 className="text-5xl font-extrabold text-center text-white mb-12">
+                <h1 className="text-5xl font-extrabold text-center mb-12">
                     Your <span className="text-red-500">Cart</span>
                 </h1>
 
                 {cartItems.length === 0 ? (
-                    <p className="text-center text-white text-lg font-semibold">Your cart is empty.</p>
+                    <p className="text-center text-lg font-semibold">Your cart is empty.</p>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                        {cartItems.map((item) => (
-                            <div
-                                key={item._id}
-                                className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg overflow-hidden transform transition-all hover:scale-105"
-                            >
-                                <img
-                                    src={item.product.productImage}
-                                    alt={item.product.productName}
-                                    className="w-full h-48 object-cover rounded-t-2xl"
-                                />
-                                <div className="p-4 text-white">
-                                    <h2 className="text-2xl font-bold mb-2 text-yellow-400">
-                                        {item.product.productName}
-                                    </h2>
-                                    <p className="text-gray-300 mb-2">{item.product.description}</p>
-                                    <p className="text-red-400 font-bold text-lg mb-2">
-                                        ₹{item.product.price}
-                                    </p>
-                                    <div className="flex items-center">
-                                        <button
-                                            onClick={() => removeFromCart(item.product._id)}
-                                            className="bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600 transition"
-                                        >
-                                            -
-                                        </button>
-                                        <p className="text-gray-300 font-semibold mx-4">Quantity: {item.quantity}</p>
-                                        <button
-                                            onClick={() => addToCart(item.product._id)}
-                                            className="bg-green-500 text-white px-2 py-1 rounded-lg hover:bg-green-600 transition"
-                                        >
-                                            +
-                                        </button>
+                    <>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                            {cartItems.map((item) => (
+                                <div
+                                    key={item._id}
+                                    className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg overflow-hidden transform transition-all hover:scale-105"
+                                >
+                                    <img
+                                        src={item.product.productImage}
+                                        alt={item.product.productName}
+                                        className="w-full h-48 object-cover rounded-t-2xl"
+                                    />
+                                    <div className="p-4">
+                                        <h2 className="text-2xl font-bold mb-2 text-yellow-400">{item.product.productName}</h2>
+                                        <p className="text-gray-300 mb-2">{item.product.description}</p>
+                                        <p className="text-red-400 font-bold text-lg mb-2">₹{item.product.price}</p>
+                                        <div className="flex items-center">
+                                            <button
+                                                onClick={() => removeFromCart(item.product._id)}
+                                                className="bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600 transition"
+                                            >
+                                                -
+                                            </button>
+                                            <p className="text-gray-300 font-semibold mx-4">{item.quantity}</p>
+                                            <button
+                                                onClick={() => addToCart(item.product._id)}
+                                                className="bg-green-500 text-white px-2 py-1 rounded-lg hover:bg-green-600 transition"
+                                            >
+                                                +
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+
+                        <div className="mt-12 p-6 bg-white/10 border border-white/20 backdrop-blur-lg rounded-xl shadow-lg text-center max-w-xl mx-auto">
+                            <h2 className="text-3xl font-bold text-yellow-400">Total: ₹{totalAmount.toFixed(2)}</h2>
+                            {/* <Link to={"/checkout"} >
+                                <button
+                                    className="mt-4 px-6 py-3 text-lg font-bold bg-red-500 rounded-lg hover:bg-red-600 transition transform hover:scale-105 shadow-lg"
+                                >
+                                    Order Now
+                                </button>
+                            </Link> */}
+
+                            <Link to="/checkout" state={{ totalAmount }}>
+                                <button
+                                    className="mt-4 px-6 py-3 text-lg font-bold bg-red-500 rounded-lg hover:bg-red-600 transition transform hover:scale-105 shadow-lg"
+                                >
+                                    Order Now
+                                </button>
+                            </Link>
+                        </div>
+                    </>
                 )}
             </div>
         </div>
