@@ -59,21 +59,21 @@ export default function Menu() {
         <div className="min-h-screen bg-black relative">
             {/* Background Effects */}
             <div className="absolute inset-0 overflow-hidden">
-                <div className="absolute top-0 right-0 w-[18rem] h-[18rem] bg-yellow-500 opacity-40 rounded-full blur-[120px]"></div>
-                <div className="absolute bottom-0 left-0 w-[18rem] h-[18rem] bg-red-500 opacity-35 rounded-full blur-[100px]"></div>
+                <div className="absolute top-0 right-0 w-[12rem] h-[12rem] md:w-[18rem] md:h-[18rem] bg-yellow-500 opacity-40 rounded-full blur-[100px]"></div>
+                <div className="absolute bottom-0 left-0 w-[12rem] h-[12rem] md:w-[18rem] md:h-[18rem] bg-red-500 opacity-35 rounded-full blur-[100px]"></div>
             </div>
 
-            <div className="relative z-10 max-w-6xl mx-auto px-6 py-16">
-                <h1 className="text-5xl font-extrabold text-center text-white mb-12">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <h1 className="text-4xl sm:text-5xl font-extrabold text-center text-white mb-8">
                     Our <span className="text-red-500">Menu</span>
                 </h1>
 
                 {Object.keys(groupedProducts).map((category) => (
                     <div key={category} className="mb-12">
-                        <h2 className="text-3xl font-semibold text-orange-400 mb-6">
+                        <h2 className="text-2xl sm:text-3xl font-semibold text-orange-400 mb-6">
                             {category.charAt(0).toUpperCase() + category.slice(1)}
                         </h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                             {groupedProducts[category].map((product) => (
                                 <div
                                     key={product._id}
@@ -88,10 +88,10 @@ export default function Menu() {
 
                                     {/* Content Wrapper */}
                                     <div className="p-4 text-white flex flex-col flex-grow">
-                                        <h2 className="text-xl font-bold text-yellow-400">
+                                        <h2 className="text-lg sm:text-xl font-bold text-yellow-400">
                                             {product.productName}
                                         </h2>
-                                        <p className="text-gray-300 flex-grow">{product.description}</p>
+                                        <p className="text-gray-300 text-sm sm:text-base flex-grow">{product.description}</p>
 
                                         {/* Price & Button Wrapper */}
                                         <div className="flex justify-between items-center mt-4">
@@ -100,10 +100,10 @@ export default function Menu() {
                                             </p>
                                             <button
                                                 onClick={() => addToCart(product)}
-                                                className="flex items-center bg-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 transition"
+                                                className="flex items-center bg-yellow-600 text-white py-2 px-3 sm:px-4 rounded-lg hover:bg-yellow-700 transition whitespace-nowrap"
                                             >
                                                 <FontAwesomeIcon icon={faPlus} className="mr-2" />
-                                                Add to Cart
+                                                <span className="text-sm sm:text-base">Add to Cart</span>
                                             </button>
                                         </div>
                                     </div>
