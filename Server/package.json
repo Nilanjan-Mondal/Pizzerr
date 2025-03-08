@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "npx nodemon src/index.js"
+    "start": "node src/index.js",
+    "build": "echo 'Nothing to build'",
+    "vercel-build": "npm install"
   },
   "author": "",
   "license": "ISC",
