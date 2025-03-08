@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BaseUrl } from "@/configs/clientConfig";
 
 export default function Cart() {
     const [cartItems, setCartItems] = useState([]);
@@ -11,7 +12,7 @@ export default function Cart() {
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
-                const response = await axios.get("http://localhost:3500/carts", { withCredentials: true });
+                const response = await axios.get(`${BaseUrl}/carts`, { withCredentials: true });
                 setCartItems(response.data.data.items);
             } catch (error) {
                 console.error("Error fetching cart items:", error.response?.data || error.message);
@@ -24,7 +25,7 @@ export default function Cart() {
 
     const addToCart = async (productId) => {
         try {
-            const response = await axios.post(`http://localhost:3500/carts/add/${productId}`, {}, { withCredentials: true });
+            const response = await axios.post(`${BaseUrl}/carts/add/${productId}`, {}, { withCredentials: true });
             if (response.data.success) {
                 setCartItems((prevItems) =>
                     prevItems.map((item) =>
@@ -39,7 +40,7 @@ export default function Cart() {
 
     const removeFromCart = async (productId) => {
         try {
-            const response = await axios.post(`http://localhost:3500/carts/rem/${productId}`, {}, { withCredentials: true });
+            const response = await axios.post(`${BaseUrl}/carts/rem/${productId}`, {}, { withCredentials: true });
             if (response.data.success) {
                 setCartItems((prevItems) =>
                     prevItems

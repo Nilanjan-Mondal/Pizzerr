@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FiUpload } from "react-icons/fi";
 import axios from "axios";
+import { BaseUrl } from "@/configs/clientConfig";
 
 export default function AddProduct() {
     const [fileName, setFileName] = useState("");
@@ -27,7 +28,7 @@ export default function AddProduct() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const url = "http://localhost:3500/products/";
+        const url = `${BaseUrl}/products/`;
 
         const data = new FormData();
         data.append("productName", formData.productName);

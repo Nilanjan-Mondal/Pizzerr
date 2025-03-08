@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-
+import { BaseUrl } from "@/configs/clientConfig";
 export default function AuthPage({ onAuth }) {
   const [isSignUp, setIsSignUp] = useState(true);
   const [formData, setFormData] = useState({
@@ -23,8 +23,8 @@ export default function AuthPage({ onAuth }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = isSignUp
-      ? "http://localhost:3500/user/create/"
-      : "http://localhost:3500/auth/login";
+      ? `${BaseUrl}/user/create/`
+      : `${BaseUrl}/auth/login`;
 
     try {
       const response = await axios.post(url, formData, { withCredentials: true });

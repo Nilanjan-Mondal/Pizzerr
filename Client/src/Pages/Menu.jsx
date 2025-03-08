@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { BaseUrl } from "@/configs/clientConfig";
 
 export default function Menu() {
     const [products, setProducts] = useState([]);
@@ -11,7 +12,7 @@ export default function Menu() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get("http://localhost:3500/products/");
+                const response = await axios.get(`${BaseUrl}/products/`);
                 const products = response.data.data;
                 setProducts(products);
 
@@ -35,7 +36,7 @@ export default function Menu() {
 
     const addToCart = async (product) => {
         try {
-            const response = await axios.post(`http://localhost:3500/carts/add/${product._id}`, {}, { withCredentials: true });
+            const response = await axios.post(`${BaseUrl}/carts/add/${product._id}`, {}, { withCredentials: true });
             if (response.data.success) {
                 alert("Added to cart!");
                 setCart((prevCart) => {

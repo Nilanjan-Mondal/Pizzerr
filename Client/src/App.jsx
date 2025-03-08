@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
 import TermsConditions from "./Pages/TermsCondition";
 import FAQ from "./Pages/Faq";
+import { BaseUrl } from "./configs/clientConfig";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -21,7 +22,7 @@ function App() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await axios.get("http://localhost:3500/auth/protected", { withCredentials: true });
+        await axios.get(`${BaseUrl}/auth/protected`, { withCredentials: true });
         setIsAuthenticated(true);
       } catch (error) {
         setIsAuthenticated(false);

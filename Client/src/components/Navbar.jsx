@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faShoppingCart, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { BaseUrl } from "@/configs/clientConfig";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -13,7 +14,7 @@ export default function Navbar() {
 
     const handleSignOut = async () => {
         try {
-            await axios.get("http://localhost:3500/auth/logout", { withCredentials: true });
+            await axios.get(`${BaseUrl}/auth/logout`, { withCredentials: true });
             window.location.href = "/auth";
         } catch (error) {
             console.error("Error signing out:", error.response?.data || error.message);
