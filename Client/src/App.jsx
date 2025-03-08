@@ -9,6 +9,11 @@ import axios from "axios";
 import Menu from "./Pages/Menu";
 import AddProduct from "./Pages/AddProduct";
 import Cart from "./Pages/Cart";
+import Checkout from "./Pages/Checkout";
+import Footer from "./components/Footer";
+import PrivacyPolicy from "./Pages/PrivacyPolicy";
+import TermsConditions from "./Pages/TermsCondition";
+import FAQ from "./Pages/Faq";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -37,9 +42,14 @@ function App() {
               <Route path="/about" element={<AboutUs />} />
               <Route path="/menu" element={<Menu />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
               <Route path="/add-product" element={<AddProduct/>} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsConditions />} />
+              <Route path="/faq" element={<FAQ />} />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
+            <Footer />
           </>
         ) : (
           <Routes>
