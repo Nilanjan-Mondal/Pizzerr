@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AuthPage({ onAuth }) {
   const [isSignUp, setIsSignUp] = useState(true);
@@ -12,7 +12,9 @@ export default function AuthPage({ onAuth }) {
     password: "",
     role: "USER",
   });
-
+  
+  const navigate = useNavigate();  // Add the useNavigate hook
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -27,8 +29,15 @@ export default function AuthPage({ onAuth }) {
     try {
       const response = await axios.post(url, formData, { withCredentials: true });
       if (response.data.success) {
-        localStorage.setItem("role", response.data.data.role);
-        onAuth();
+        if (isSignUp) {
+          // Redirect to sign-in after successful sign-up
+          setIsSignUp(false);
+        } else {
+          // Store token and redirect to home page after successful login
+          localStorage.setItem("role", response.data.data.role);
+          onAuth();
+          navigate("/");  // Navigate to home page after login
+        }
       }
     } catch (error) {
       console.error("Error:", error.response?.data || error.message);
@@ -50,7 +59,7 @@ export default function AuthPage({ onAuth }) {
       <div className="flex items-center justify-center md:w-1/2 w-full mb-8 md:mb-0">
         <Link to="/" className="text-white text-6xl md:text-[80px] font-extrabold tracking-wide">
           PI<span className="text-yellow-500 text-[80px] md:text-[100px]">Z</span>
-          <span className="text-red-500 text-[80px] md:text-[100px]">Z</span>ER
+          <span className="text-red-500 text-[85px] md:text-[120px]">Z</span>ER
         </Link>
       </div>
 
