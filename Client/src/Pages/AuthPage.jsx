@@ -1,8 +1,7 @@
-// import { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { BaseUrl } from "@/configs/clientConfig";
-
 export default function AuthPage({ onAuth }) {
   const [isSignUp, setIsSignUp] = useState(true);
   const [formData, setFormData] = useState({
@@ -13,9 +12,9 @@ export default function AuthPage({ onAuth }) {
     password: "",
     role: "USER",
   });
-
-  const navigate = useNavigate();
-
+  
+  const navigate = useNavigate();  // Add the useNavigate hook
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -31,11 +30,13 @@ export default function AuthPage({ onAuth }) {
       const response = await axios.post(url, formData, { withCredentials: true });
       if (response.data.success) {
         if (isSignUp) {
+          // Redirect to sign-in after successful sign-up
           setIsSignUp(false);
         } else {
+          // Store token and redirect to home page after successful login
           localStorage.setItem("role", response.data.data.role);
           onAuth();
-          navigate("/");
+          navigate("/");  // Navigate to home page after login
         }
       }
     } catch (error) {
