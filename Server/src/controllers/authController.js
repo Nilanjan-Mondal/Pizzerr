@@ -10,7 +10,8 @@ async function login (req, res) {
             //this is used to make sure that the cookie or the jwt is not accessible by the client side javascript
 
             httpOnly: true,
-            secure: false,
+            secure: true,
+            sameSite: "None",
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
 
