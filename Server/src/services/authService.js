@@ -43,9 +43,30 @@ async function loginUser (authDetails) {
     };
 }
 
+// for localhost
+// async function logoutUser (req, res) {
+//     try {
+//         return res.status(200).cookie("authToken", "", {maxAge: 0}).json({
+//             message: "User logged out successfully",
+//             success: true,
+//             data: {},
+//             error: {}
+//         })
+//     } catch (error) {
+//         console.log(error);
+//         return res.status(500).json({
+//             success:false,
+//             message:"Failed to logout"
+//         })
+//     }
+// }
+
+
+// for proudction
+
 async function logoutUser (req, res) {
     try {
-        return res.status(200).cookie("authToken", "", {maxAge: 0, secure: true}).json({
+        return res.status(200).cookie("authToken", "", {maxAge: 0, secure: true, domain: 'pizzer-backend.onrender.com', sameSite: 'None'}).json({
             message: "User logged out successfully",
             success: true,
             data: {},
