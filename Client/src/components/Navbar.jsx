@@ -16,7 +16,7 @@ export default function Navbar() {
         try {
             await axios.post(`${BaseUrl}/auth/logout`, { withCredentials: true });
             document.cookie = "authToken=; max-age=0; path=/; domain=pizzer-backend.onrender.com;";
-            // window.location.href = "/auth";
+            window.location.href = "/auth";
             window.location.reload();
         } catch (error) {
             console.error("Error signing out:", error.response?.data || error.message);
