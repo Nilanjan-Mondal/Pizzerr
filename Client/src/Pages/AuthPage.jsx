@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { BaseUrl } from "@/configs/clientConfig";
+
 export default function AuthPage({ onAuth }) {
   const [isSignUp, setIsSignUp] = useState(true);
   const [formData, setFormData] = useState({
@@ -12,9 +13,9 @@ export default function AuthPage({ onAuth }) {
     password: "",
     role: "USER",
   });
-  
-  const navigate = useNavigate();  // Add the useNavigate hook
-  
+
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -30,13 +31,11 @@ export default function AuthPage({ onAuth }) {
       const response = await axios.post(url, formData, { withCredentials: true });
       if (response.data.success) {
         if (isSignUp) {
-          // Redirect to sign-in after successful sign-up
           setIsSignUp(false);
         } else {
-          // Store token and redirect to home page after successful login
           localStorage.setItem("role", response.data.data.role);
           onAuth();
-          navigate("/");  // Navigate to home page after login
+          navigate("/");
         }
       }
     } catch (error) {
@@ -52,7 +51,7 @@ export default function AuthPage({ onAuth }) {
         <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 w-[18rem] md:w-[22rem] h-[18rem] md:h-[22rem] bg-yellow-500 opacity-40 rounded-full blur-[120px]"></div>
         <div className="absolute bottom-0 left-0 w-[14rem] md:w-[18rem] h-[14rem] md:h-[18rem] bg-red-500 opacity-35 rounded-full blur-[100px]"></div>
         <div className="absolute top-0 right-0 w-[12rem] md:w-[14rem] h-[12rem] md:h-[14rem] bg-red-500 opacity-30 rounded-full blur-[90px]"></div>
-        <div className="absolute bottom-0 right-0 w-[10rem] md:w-[12rem] h-[10rem] md:h-[12rem] bg-red-500 opacity-25 rounded-full blur-[80px]"></div>
+        <div className="absolute bottom-0 right-0 w-[10rem] md:w-[12rem] h-[10rem] md:h-[10rem] bg-red-500 opacity-25 rounded-full blur-[80px]"></div>
       </div>
 
       {/* Left Section: Logo */}
