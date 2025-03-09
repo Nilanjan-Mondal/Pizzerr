@@ -9,6 +9,6 @@ authRouter.post('/login', login);
 authRouter.get('/protected', verifyToken, (req, res) => {
     res.status(200).json({ message: "This is a protected route." });
 });
-authRouter.post('/logout', logoutUser);
+authRouter.get('/logout', logoutUser);
 
 module.exports = authRouter;
