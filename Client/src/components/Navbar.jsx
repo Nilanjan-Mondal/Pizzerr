@@ -15,7 +15,8 @@ export default function Navbar() {
     const handleSignOut = async () => {
         try {
             await axios.get(`${BaseUrl}/auth/logout`, { withCredentials: true });
-            window.location.href = "/auth";
+            // window.location.href = "/auth";
+            window.location.reload();
         } catch (error) {
             console.error("Error signing out:", error.response?.data || error.message);
         }
