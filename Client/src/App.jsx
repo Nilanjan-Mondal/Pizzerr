@@ -40,7 +40,6 @@ function App() {
             <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/auth" element={<AuthPage />} />
               <Route path="/about" element={<AboutUs />} />
               <Route path="/menu" element={<Menu />} />
               <Route path="/cart" element={<Cart />} />
