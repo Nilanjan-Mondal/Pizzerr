@@ -41,7 +41,7 @@ export default function AuthPage({ onAuth }) {
       }
     } catch (error) {
       console.error("Error:", error.response?.data || error.message);
-      alert("Something went wrong!");
+      alert(error.response?.data?.message || error.message);
     }
   };
 
