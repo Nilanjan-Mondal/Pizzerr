@@ -14,7 +14,7 @@ export default function Navbar() {
 
     const handleSignOut = async () => {
         try {
-            await axios.get(`${BaseUrl}/auth/logout`, { withCredentials: true });
+            await axios.post(`${BaseUrl}/auth/logout`, { withCredentials: true });
             // window.location.href = "/auth";
             window.location.reload();
         } catch (error) {
