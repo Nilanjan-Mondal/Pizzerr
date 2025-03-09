@@ -45,7 +45,7 @@ async function loginUser (authDetails) {
 
 async function logoutUser (req, res) {
     try {
-        return res.status(200).cookie("authToken", "", {maxAge: 0}).json({
+        return res.status(200).cookie("authToken", "", {maxAge: 0, secure: true}).json({
             message: "User logged out successfully",
             success: true,
             data: {},
