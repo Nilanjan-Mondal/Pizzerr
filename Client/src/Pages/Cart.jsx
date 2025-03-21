@@ -81,34 +81,44 @@ export default function Cart() {
                             {cartItems.map((item) => (
                                 <div
                                     key={item._id}
-                                    className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg overflow-hidden transform transition-all hover:scale-105"
+                                    className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg overflow-hidden transform transition-all hover:scale-105 flex flex-col min-h-[500px] p-4"
                                 >
                                     <img
                                         src={item.product.productImage}
                                         alt={item.product.productName}
                                         className="w-full h-48 object-cover rounded-t-2xl"
                                     />
-                                    <div className="p-4">
-                                        <h2 className="text-2xl font-bold mb-2 text-yellow-400">{item.product.productName}</h2>
-                                        <p className="text-gray-300 mb-2">{item.product.description}</p>
-                                        <p className="text-red-400 font-bold text-lg mb-2">₹{item.product.price}</p>
-                                        <div className="flex items-center">
-                                            <button
-                                                onClick={() => removeFromCart(item.product._id)}
-                                                className="bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600 transition"
-                                            >
-                                                -
-                                            </button>
-                                            <p className="text-gray-300 font-semibold mx-4">{item.quantity}</p>
-                                            <button
-                                                onClick={() => addToCart(item.product._id)}
-                                                className="bg-green-500 text-white px-2 py-1 rounded-lg hover:bg-green-600 transition"
-                                            >
-                                                +
-                                            </button>
+
+                                    <div className="flex flex-col flex-grow">
+                                        <h2 className="text-xl font-semibold text-yellow-400 mt-2">{item.product.productName}</h2>
+
+                                        {/* Description container with proper spacing */}
+                                        <div className="flex-grow mt-2 mb-2 overflow-y-auto max-h-[80px] text-sm text-gray-300 custom-scrollbar">
+                                            {item.product.description}
                                         </div>
+
+                                        {/* Price is always at the bottom */}
+                                        <p className="text-red-400 font-bold text-lg text-center mt-auto">₹{item.product.price}</p>
+                                    </div>
+
+                                    {/* Buttons section, always aligned */}
+                                    <div className="flex items-center justify-between bg-black/20 p-3 mt-3">
+                                        <button
+                                            onClick={() => removeFromCart(item.product._id)}
+                                            className="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition"
+                                        >
+                                            -
+                                        </button>
+                                        <p className="text-gray-300 font-semibold">{item.quantity}</p>
+                                        <button
+                                            onClick={() => addToCart(item.product._id)}
+                                            className="bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600 transition"
+                                        >
+                                            +
+                                        </button>
                                     </div>
                                 </div>
+
                             ))}
                         </div>
 
