@@ -18,8 +18,7 @@ const productRouter = require('./routes/productRoute.js');
 const app = express();
 
 app.use(cors({
-    //origin: "https://pizzer.vercel.app", // Replace with your client's origin for production
-    origin: "http://localhost:5173", // Replace with your client's origin for localhost
+    origin: "*", // Replace with your client's origin for localhost
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add the methods you need
     credentials: true // Allow credentials (cookies, authorization headers, etc.)
 }));
@@ -33,6 +32,12 @@ app.use('/user', userRouter);
 app.use('/carts', cartRouter);
 app.use('/auth', authRouter);
 app.use('/products', productRouter);
+
+app.get('/', (req, res) => {
+    return res.json({
+        message: "Welcome to piZZer..."
+    })
+})
 
 app.get('/ping', isLoggedIn, (req, res) => {
     // controller
