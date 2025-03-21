@@ -46,7 +46,7 @@ export default function AuthPage({ onAuth }) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-black relative justify-center items-center px-4 md:px-0">
+    <div className="flex flex-col md:flex-row min-h-screen bg-black relative justify-center items-center px-4 md:px-0">
       {/* Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 w-[18rem] md:w-[22rem] h-[18rem] md:h-[22rem] bg-yellow-500 opacity-40 rounded-full blur-[120px]"></div>
