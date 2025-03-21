@@ -18,7 +18,7 @@ const productRouter = require('./routes/productRoute.js');
 const app = express();
 
 app.use(cors({
-    origin: "https://pizzer.vercel.app", // Replace with your client's origin for localhost
+    origin: "*", // Replace with your client's origin for localhost
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add the methods you need
     credentials: true // Allow credentials (cookies, authorization headers, etc.)
 }));
