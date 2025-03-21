@@ -56,16 +56,6 @@ app.post('/photo', uploader.single('incomingFile'), async (req, res) => {
     });
 })
 
-// for production
-// Handle CORS preflight requests (OPTIONS)
-app.options('*', cors());  // Allow preflight for all routes
-
-// Global error handler to ensure CORS headers are sent on error
-app.use((err, req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://pizzer.vercel.app");  // Ensure CORS header is set
-    res.status(err.status || 500).json({ error: err.message });
-});
-
 //server starts here
 app.listen(ServerConfig.PORT, async () => {
     await connectDB();
